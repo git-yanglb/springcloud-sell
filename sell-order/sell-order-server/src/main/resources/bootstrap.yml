@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: sell-order-server
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: sell-config-server
+      profile: dev
+    stream:
+      bindings:
+        myMessageInput:
+          group: order
+          content-type: application/json
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://eureka:eureka@localhost:8761/eureka
+hystrix:
+  command:
+    # 默认超时时间
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+    # 为指定的commandKey设置超时间，如果不指定commandKey默认为@HystrixCommand修饰的方法名
+    getProductList:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+# 启用feign hystrix            
+feign:
+  hystrix:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+          
+
+            
+      

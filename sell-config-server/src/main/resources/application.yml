@@ -1,0 +1,28 @@
+server:
+  port: 8999
+spring:
+  application:
+    name: sell-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/git-yanglb/cloud-config
+          username: 
+          passphrase: 
+          search-paths:
+            - /springcloud-sell
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    hostname: ${spring.cloud.client.ip-address}
+  client:
+    service-url:
+      defaultZone: http://eureka:eureka@localhost:8761/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
+          
